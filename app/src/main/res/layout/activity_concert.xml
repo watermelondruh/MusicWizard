@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#030303"
+    tools:context=".ConcertActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_marginBottom="70dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp">
+
+            <SearchView
+                android:id="@+id/searchview_concertactivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#8B645E5E"
+                android:scrollbarSize="6dp"
+                android:scrollbarThumbHorizontal="@android:color/background_light"
+                android:scrollbarThumbVertical="@android:color/background_light" />
+
+            <ImageView
+                android:id="@+id/imageview_concertactivity"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/searchview_concertactivity"
+                android:contentDescription="@string/event_image" />
+
+            <TextView
+                android:id="@+id/textview_concertactivity_eventname"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageview_concertactivity"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="montserrat"
+                android:textAllCaps="true"
+                android:textColor="#FAF7F7"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textview_concertactivity_eventtime"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_concertactivity_eventname"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="lato_italic"
+                android:textColor="#FAF7F7"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textview_concertactivity_eventlocation"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_concertactivity_eventtime"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="lato_italic"
+                android:textColor="#F5F1F1"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_concertactivity_eventdescription"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_concertactivity_eventlocation"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="lato_light"
+                android:textColor="#F8F7F7"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/button_concertactivity_nextevent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_concertactivity_eventdescription"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:background="#FAF8F8"
+                android:fontFamily="monospace"
+                android:text="next event"
+                android:textColor="#0A0A0A"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/button_concertactivity_previousevent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_concertactivity_eventdescription"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:background="#F7F3F3"
+                android:fontFamily="monospace"
+                android:text="previous event"
+                android:textColor="#030303"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:visibility="visible"
+        app:menu="@menu/navigation"
+        tools:visibility="visible">
+
+    </android.support.design.widget.BottomNavigationView>
+
+
+</android.support.design.widget.CoordinatorLayout>
