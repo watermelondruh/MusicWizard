@@ -12,7 +12,7 @@ public class Search {
     }
 
     public interface ActionListener {
-        void init(String token);
+        void initiate(String token);
         String getCurrentQuery();
         void search(String searchQuery);
         void loadMoreResults();

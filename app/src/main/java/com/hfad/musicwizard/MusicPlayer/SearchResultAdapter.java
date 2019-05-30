@@ -21,9 +21,9 @@ import kaaes.spotify.webapi.android.models.Track;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
-    private final List<Track> items = new ArrayList<>();
-    private final Context context;
-    private final ItemSelectedListener listener;
+    private List<Track> items = new ArrayList<>();
+    private Context context;
+    private ItemSelectedListener listener;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

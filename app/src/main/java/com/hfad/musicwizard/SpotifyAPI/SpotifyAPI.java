@@ -9,7 +9,7 @@ import retrofit.android.MainThreadExecutor;
 
 public class SpotifyAPI {
 
-    public static final String BASE_URL = "https://api.spotify.com/v1";
+    private static final String BASE_URL = "https://api.spotify.com/v1";
     private SpotifyService spotifyService;
     private String token;
 
@@ -25,10 +25,10 @@ public class SpotifyAPI {
     public SpotifyAPI() {
         Executor httpExecutor = Executors.newSingleThreadExecutor();
         MainThreadExecutor callbackExecutor = new MainThreadExecutor();
-        spotifyService = init(httpExecutor, callbackExecutor);
+        spotifyService = execute(httpExecutor, callbackExecutor);
     }
 
-    private SpotifyService init(Executor httpExecutor, Executor callbackExecutor) {
+    private SpotifyService execute(Executor httpExecutor, Executor callbackExecutor) {
         RestAdapter restAdapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setExecutors(httpExecutor, callbackExecutor)
                 .setEndpoint(BASE_URL)
@@ -38,9 +38,8 @@ public class SpotifyAPI {
         return restAdapter.create(SpotifyService.class);
     }
 
-    public SpotifyAPI setToken(String token) {
+    public void setToken(String token) {
         this.token = token;
-        return this;
     }
 
     public SpotifyService getService() {

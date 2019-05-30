@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#030303"
+    android:background="@android:color/black"
     tools:context=".ConcertActivity">
 
     <ScrollView
@@ -22,10 +22,8 @@
                 android:id="@+id/searchview_concertactivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#8B645E5E"
-                android:scrollbarSize="6dp"
-                android:scrollbarThumbHorizontal="@android:color/background_light"
-                android:scrollbarThumbVertical="@android:color/background_light" />
+                android:background="@android:color/white"
+                android:queryHint="Search concerts..."/>
 
             <ImageView
                 android:id="@+id/imageview_concertactivity"
@@ -42,9 +40,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="montserrat"
+                android:fontFamily="@font/montserrat"
                 android:textAllCaps="true"
-                android:textColor="#FAF7F7"
+                android:textColor="@android:color/white"
                 android:textSize="30sp" />
 
             <TextView
@@ -55,8 +53,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="lato_italic"
-                android:textColor="#FAF7F7"
+                android:fontFamily="@font/lato_italic"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
             <TextView
@@ -67,8 +65,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="lato_italic"
-                android:textColor="#F5F1F1"
+                android:fontFamily="@font/lato_italic"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
             <TextView
@@ -79,8 +77,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="lato_light"
-                android:textColor="#F8F7F7"
+                android:fontFamily="@font/lato_light"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
             <Button
@@ -90,10 +88,10 @@
                 android:layout_below="@id/textView_concertactivity_eventdescription"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
-                android:background="#FAF8F8"
+                android:background="@android:color/white"
                 android:fontFamily="monospace"
-                android:text="next event"
-                android:textColor="#0A0A0A"
+                android:text="@string/next_event"
+                android:textColor="@android:color/black"
                 android:visibility="invisible" />
 
             <Button
@@ -103,10 +101,10 @@
                 android:layout_below="@id/textView_concertactivity_eventdescription"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
-                android:background="#F7F3F3"
+                android:background="@android:color/white"
                 android:fontFamily="monospace"
-                android:text="previous event"
-                android:textColor="#030303"
+                android:text="@string/previous_event"
+                android:textColor="@android:color/black"
                 android:visibility="invisible" />
 
         </RelativeLayout>

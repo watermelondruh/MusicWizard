@@ -34,5 +34,4 @@ public class PlayerService extends Service {
         super.onDestroy();
     }
 
-    //TODO: review
 }

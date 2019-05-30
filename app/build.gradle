@@ -10,6 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -54,4 +55,5 @@ dependencies {
     implementation 'com.ticketmaster.api:discovery-java:0.1.6'
     implementation 'com.appunity.retrofit2:converter-gson:2.0.2'
     implementation 'com.sachinhandiekar:jMusixMatch:1.1.4'
+    implementation 'com.android.support:multidex:1.0.3'
 }

@@ -29,8 +29,12 @@
     <string name="event_name">Event Name</string>
     <string name="event_time">Event Time</string>
     <string name="event_venue">Event Venue</string>
-    <string name="event_discription">Event Discription</string>
+    <string name="event_description">Event Description</string>
     <string name="event_location">Event Location</string>
-    <string name="event_image">event_image</string>
-    <string name="previous_event">previous_event</string>
+    <string name="event_image">event image</string>
+    <string name="previous_event">previous event</string>
+    <string name="next_event">next event</string>
+    <string name="song_name">Song Name</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="get_lyrics">Get Lyrics</string>
 </resources>

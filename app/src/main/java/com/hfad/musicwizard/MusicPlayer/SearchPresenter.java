@@ -45,14 +45,13 @@ public class SearchPresenter implements Search.ActionListener {
     }
 
     @Override
-    public void init(String accessToken) {
-        logMessage("Api Client created");
+    public void initiate(String accessToken) {
         SpotifyAPI spotifyAPI = new SpotifyAPI();
 
         if (accessToken != null) {
             spotifyAPI.setToken(accessToken);
         } else {
-            logError("No valid access token");
+            Toast.makeText(context, "No access token; please log in to Spotify.", Toast.LENGTH_SHORT).show();
         }
 
         searchPager = new SearchPager(spotifyAPI.getService());
@@ -63,8 +62,7 @@ public class SearchPresenter implements Search.ActionListener {
 
     @Override
     public void search(@Nullable String searchQuery) {
-        if (searchQuery != null && !searchQuery.isEmpty() && !searchQuery.equals(currentQuery)) {
-            logMessage("query text submit " + searchQuery);
+        if (searchQuery != null && !searchQuery.equals(currentQuery)) {
             currentQuery = searchQuery;
             view.reset();
             completeListener = new SearchPager.CompleteListener() {
@@ -75,7 +73,8 @@ public class SearchPresenter implements Search.ActionListener {
 
                 @Override
                 public void onError(Throwable error) {
-                    logError(error.getMessage());
+                    Log.e(TAG, error.getMessage());
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             };
             searchPager.getFirstPage(searchQuery, PAGE_SIZE, completeListener);
@@ -106,7 +105,6 @@ public class SearchPresenter implements Search.ActionListener {
 
     @Override
     public void loadMoreResults() {
-        Log.d(TAG, "Load more...");
         searchPager.getNextPage(completeListener);
     }
 
@@ -115,32 +113,21 @@ public class SearchPresenter implements Search.ActionListener {
         String previewUrl = item.preview_url;
 
         if (previewUrl == null) {
-            logMessage("Track doesn't have a preview");
+            Toast.makeText(context,"No preview is available for the selected track.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        if (player == null) return;
 
         String currentTrackUrl = player.getCurrentTrackURL();
 
         if (currentTrackUrl == null || !currentTrackUrl.equals(previewUrl)) {
             player.play(previewUrl);
-        } else if (player.isPlaying()) {
+        }
+        else if (player.isPlaying()) {
             player.pause();
-        } else {
+        }
+        else {
             player.resume();
         }
     }
 
-    private void logError(String msg) {
-        Toast.makeText(context, "Error: " + msg, Toast.LENGTH_SHORT).show();
-        Log.e(TAG, msg);
-    }
-
-    private void logMessage(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-        Log.d(TAG, msg);
-    }
-
-    //TODO: review
 }

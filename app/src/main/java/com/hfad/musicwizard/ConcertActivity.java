@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.hfad.musicwizard.MusicPlayer.MainActivity;
 import com.squareup.picasso.Picasso;
 import com.ticketmaster.api.discovery.DiscoveryApi;
 import com.ticketmaster.discovery.model.Event;
@@ -158,8 +157,12 @@ public class ConcertActivity extends AppCompatActivity {
 
                 if (eventIndex < events.size())
                     buttonNextEvent.setVisibility(View.VISIBLE);
+                else
+                    buttonPreviousEvent.setVisibility(View.INVISIBLE);
                 if (eventIndex > 0)
                     buttonPreviousEvent.setVisibility(View.VISIBLE);
+                else
+                    buttonPreviousEvent.setVisibility(View.INVISIBLE);
 
                 if (event.getName() != null)
                     eventName = event.getName();

@@ -14,8 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.hfad.musicwizard.MusicPlayer.MainActivity;
-
+import org.jmusixmatch.MusixMatch;
 import org.jmusixmatch.MusixMatchException;
 import org.jmusixmatch.entity.track.Track;
 import org.jmusixmatch.entity.track.TrackData;
@@ -26,16 +25,13 @@ public class LyricActivity extends AppCompatActivity {
 
     private TextView textViewLyrics;
     private EditText editTextSong;
-    private String artistName;
-    private String lyricsBody;
-    private String trackName;
-    private int trackID;
-    private TrackData data;
-    private Track track;
     private EditText editTextArtist;
+
+    private String artistName;
+    private String trackName;
+    private String lyricsBody;
+
     private String apiKey = "4ab5ae9e96c6b208d9601e182c4af443";
-    private int x = 0;
-    private Button buttonLyrics;
     MusixMatch musixMatch = new MusixMatch(apiKey);
 
     @Override
@@ -43,74 +39,64 @@ public class LyricActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_lyrics);
-        Menu menu = navigation.getMenu();
+        textViewLyrics = findViewById(R.id.textview_lyricactivity);
+        editTextArtist = findViewById(R.id.edittext_lyricactivity_artistname);
+        editTextSong = findViewById(R.id.edittext_lyricactivity_songname);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
-
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case navigation_home:
-                        Intent a = new Intent(LyricActivity.this, MainActivity.class);
-                        startActivity(a);
-                        return true;
-                    case R.id.navigation_lyrics:
-                        return true;
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        Intent intent1 = new Intent(LyricActivity.this, MainActivity.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.bottom_navigation:
+                        break;
+
                     case R.id.navigation_concerts:
-                        Intent b = new Intent(LyricActivity.this, ConcertActivity.class);
-                        startActivity(b);
-                        return true;
+                        Intent intent3 = new Intent(LyricActivity.this, ConcertActivity.class);
+                        startActivity(intent3);
+                        break;
                 }
 
                 return false;
             }
         });
 
-        wireWidgets();
+        Button buttonLyrics = findViewById(R.id.button_lyrics);
         buttonLyrics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Lyrics().execute(artistName, trackName);
-
+                textViewLyrics.setText(lyricsBody);
             }
         });
-
-
-    }
-
-    private void wireWidgets() {
-        textViewLyrics = findViewById(R.id.textView_music_lyrics);
-        editTextArtist = findViewById(R.id.editText_lyric_artist);
-        buttonLyrics = findViewById(R.id.button_lyrics);
-        editTextSong = findViewById(R.id.editText_lyric_song);
     }
 
 
-    public class Lyrics extends AsyncTask<String, String, String>
-
-    {
-
+    public class Lyrics extends AsyncTask<String, String, String> {
 
         @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... strings) {
             try {
-
                 trackName = editTextSong.getText().toString();
                 artistName = editTextArtist.getText().toString();
-                track = musixMatch.getMatchingTrack(trackName, artistName);
-                data = track.getTrack();
-                trackID = data.getTrackId();
+                Track track = musixMatch.getMatchingTrack(trackName, artistName);
+                TrackData data = track.getTrack();
+                int trackID = data.getTrackId();
 
                 org.jmusixmatch.entity.lyrics.Lyrics lyrics = musixMatch.getLyrics(trackID);
                 lyricsBody = lyrics.getLyricsBody();
-                textViewLyrics.setText(lyricsBody);
-
-
-                } catch (MusixMatchException e) {
+            }
+            catch (MusixMatchException e) {
                 e.printStackTrace();
             }
 
@@ -120,11 +106,6 @@ public class LyricActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String lyricsBody) {
             super.onPostExecute(lyricsBody);
-
-
+        }
     }
-
-
-
-
-    }}
+}

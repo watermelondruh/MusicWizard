@@ -16,15 +16,14 @@ public class PreviewPlayer implements Player, MediaPlayer.OnCompletionListener {
 
     private class OnPreparedListener implements MediaPlayer.OnPreparedListener {
 
-        private final String url;
-
-        public OnPreparedListener(String url) {
+        private String url;
+        private OnPreparedListener(String url) {
             this.url = url;
         }
 
         @Override
-        public void onPrepared(MediaPlayer mp) {
-            mp.start();
+        public void onPrepared(MediaPlayer mediaPlayer) {
+            mediaPlayer.start();
             currentTrackURL = url;
         }
     }
@@ -90,5 +89,4 @@ public class PreviewPlayer implements Player, MediaPlayer.OnCompletionListener {
         return currentTrackURL;
     }
 
-    //TODO: review
 }

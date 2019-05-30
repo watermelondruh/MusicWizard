@@ -1,4 +1,4 @@
-package com.hfad.musicwizard.MusicPlayer;
+package com.hfad.musicwizard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,13 +7,15 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
-import com.hfad.musicwizard.ConcertActivity;
-import com.hfad.musicwizard.LyricActivity;
-import com.hfad.musicwizard.R;
+import com.hfad.musicwizard.MusicPlayer.ResultListScrollListener;
+import com.hfad.musicwizard.MusicPlayer.Search;
+import com.hfad.musicwizard.MusicPlayer.SearchPresenter;
+import com.hfad.musicwizard.MusicPlayer.SearchResultAdapter;
 
 import java.util.List;
 
@@ -22,14 +24,12 @@ import kaaes.spotify.webapi.android.models.Track;
 public class MainActivity extends AppCompatActivity implements Search.View {
 
     private SearchView searchView;
-    private BottomNavigationView bottomNavigationView;
-    private RecyclerView resultListRecyclerView;
-
 
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     private ScrollListener scrollListener = new ScrollListener(linearLayoutManager);
     private Search.ActionListener actionListener;
     private SearchResultAdapter adapter;
+    private Track currentTrack;
 
     public static final String EXTRA_TOKEN = "EXTRA_TOKEN";
     private static final String KEY_CURRENT_QUERY = "EXTRA_QUERY";
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements Search.View {
 
     private class ScrollListener extends ResultListScrollListener {
 
-        public ScrollListener(LinearLayoutManager layoutManager) {
+        private ScrollListener(LinearLayoutManager layoutManager) {
             super(layoutManager);
         }
 
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements Search.View {
             actionListener.loadMoreResults();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +57,17 @@ public class MainActivity extends AppCompatActivity implements Search.View {
         String token = getIntent().getStringExtra(EXTRA_TOKEN);
 
         actionListener = new SearchPresenter(this, this);
-        actionListener.init(token);
+        actionListener.initiate(token);
 
         wireWidgets();
     }
 
     private void wireWidgets() {
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -84,8 +89,7 @@ public class MainActivity extends AppCompatActivity implements Search.View {
             }
         });
 
-        // setup search field
-        searchView = findViewById(R.id.searchview_mainactivity_search);
+        searchView = findViewById(R.id.searchview_mainactivity);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,21 +104,22 @@ public class MainActivity extends AppCompatActivity implements Search.View {
             }
         });
 
-        // setup search results list
         adapter = new SearchResultAdapter(this, new SearchResultAdapter.ItemSelectedListener() {
             @Override
             public void onItemSelected(View itemView, Track item) {
                 actionListener.selectTrack(item);
+                currentTrack = item;
             }
         });
 
-        resultListRecyclerView = findViewById(R.id.recyclerview_mainactivity_searchresults);
+        RecyclerView resultListRecyclerView = findViewById(R.id.recyclerview_mainactivity_searchresults);
         resultListRecyclerView.setHasFixedSize(true);
         resultListRecyclerView.setLayoutManager(linearLayoutManager);
         resultListRecyclerView.addOnScrollListener(scrollListener);
         resultListRecyclerView.setAdapter(adapter);
 
     }
+
 
     @Override
     public void reset() {
@@ -151,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements Search.View {
         actionListener.destroy();
         super.onDestroy();
     }
+
 
 /*
     Connector.ConnectionListener mConnectionListener = new Connector.ConnectionListener() {
