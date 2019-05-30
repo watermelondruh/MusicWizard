@@ -53,7 +53,7 @@ public class LyricActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        Intent intent1 = new Intent(LyricActivity.this, MainActivity.class);
+                        Intent intent1 = new Intent(LyricActivity.this, LoginActivity.class);
                         startActivity(intent1);
                         break;
 
